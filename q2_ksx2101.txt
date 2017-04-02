@@ -1,0 +1,128 @@
+Kenneth Xiao (ksx2101)
+
+NUMBER OF NODES GENERATED ------------------------------------
+
+Tests were done with the default time of 30 seconds.
+Results are averaged over 3 tests.
+
+minimax (B) vs. greedy (W):	146782.0 nodes
+alpha-beta (B) vs. greedy (W):	 83203.3 nodes	
+
+greedy (B) vs minimax (W):	101910.7 nodes	
+greedy (B) vs. alpha-beta (W):	 56696.3 nodes
+
+Greedy always lost to my algorithms.
+
+Experiment: node_count is an instance variable, initialized with a value of 0. 
+Whenever do_minimax() is called (or do_minimax_with_alpha_beta() if alpha_beta 
+is true), node_count gets incremented by 1. This is because the function call 
+indicates that a new node was generated. I commented out this code after I got
+my results.
+
+Results: The results make sense because alpha-beta always reduced the number of 
+nodes that were generated. 
+
+
+NUMBER OF NODES DUPLICATED -----------------------------------
+
+I counted the number of boards that were duplicated, i.e. the number of nodes 
+that occurred more than once. So if a board was duplicated 3 times, I counted
+this as 1 node duplicated.
+
+Tests were done with the default time of 30 seconds.
+Results are averaged over 3 tests.
+
+minimax (B) vs. greedy (W):	21383.7 nodes duplicated
+alpha-beta (B) vs. greedy (W):	11039.0 nodes duplicated	
+
+greedy (B) vs minimax (W):	13643.0 nodes duplicated	
+greedy (B) vs. alpha-beta (W):	 6101.7 nodes duplicated
+
+Greedy always lost to my algorithms.
+
+Experiment: dictionary is an instance variable- it is a hash map that maps 
+the string representation of a board to the number of times that board has
+appeared. I created the function board_to_string() that converts a board to
+the string representation (I used board.py's display function as inspiration).
+
+For every possible board generated in do_minimax()/alpha_beta(), it is converted
+into its string representation. If this string is already in the dictionary, the
+count (the value that is being mapped to) is incremented by 1. If the string is 
+not in the dictionary, the pair (string, 1) is added to the dictionary.
+
+When the game has finished, my agent counts the number of values in the 
+dictionary that are greater than 1. This is the number of duplicated nodes.
+
+Results: The results make sense because alpha-beta always reduced the number
+of duplicated nodes, because many of the nodes have been pruned. Also, the 
+number of duplicated nodes is always less than the total number of nodes.
+
+
+AVERAGE BRANCHING FACTOR -------------------------------------
+
+Tests were done with the default time of 30 seconds.
+Results are averaged over 3 tests.
+
+minimax (B) vs. greedy (W):	12.3259700991 avg. branching factor
+alpha-beta (B) vs. greedy (W):	12.3259700991 avg. branching factor	
+
+greedy (B) vs minimax (W):	8.92262206454 avg. branching factor	
+greedy (B) vs. alpha-beta (W):	8.92262206454 avg. branching factor
+
+Greedy always lost to my algorithms.
+
+Experiment: branches is an instance variable, initialized as an empty list. 
+Whenever you get a list of possible moves (using get_legal_moves()) inside
+do_minimax() or do_minimax_with_alpha_beta(), append the length of that list 
+to branches. This is because the number of possible moves is the branching
+factor at that node.
+
+The average branching factor is then calculated as:
+(1.0 * sum(self.branches)) / len(self.branches).
+
+Results: The results make sense because the average number of children
+will be the same whether you use minimax or alpha-beta (on Piazza, it says
+"You can include the pruned nodes in the alpha-beta version"). They will 
+generate the same tree if you include the pruned nodes, so the average
+branching factor will be the same.
+
+
+ALGORITHM RUNTIME FOR DIFFERENT DEPTHS -----------------------
+
+Tests were done with a time of 300 seconds so my depth values never 
+changed (see experiment section for explanation).
+
+Runtime = (total seconds elapsed) / (# of moves)
+total seconds elapsed = (total time granted) - (final time remaining)
+
+DEPTH D = 4:
+
+	minimax (B) vs. greedy (W):	2.523 seconds/get_move()
+	alpha-beta (B) vs. greedy (W):	1.657 seconds/get_move()
+
+	greedy (B) vs minimax (W):	1.730 seconds/get_move()
+	greedy (B) vs. alpha-beta (W):	1.100 seconds/get_move()
+
+DEPTH D = 3:
+
+	minimax (B) vs. greedy (W):	0.157 seconds/get_move()
+	alpha-beta (B) vs. greedy (W):	0.133 seconds/get_move()
+
+	greedy (B) vs minimax (W):	0.107 seconds/get_move()
+	greedy (B) vs. alpha-beta (W):	0.097 seconds/get_move()
+
+Greedy always lost to my algorithms.
+
+Experiment: I changed the depth value that was being passed into do_minimax() 
+and do_minimax_with_alpha_beta(). I ensured that the time granted was high 
+enough that the depth value never changed (my algorithm goes to a lower depth
+if there is not much time remaining).
+
+Results: The results make sense because a greater depth requires you to 
+generate more nodes, which will take longer time. The runtime for games at 
+depth 4 are all larger than the runtime for their respective games at depth 3.
+
+Also, the runtime was always lower when using alpha-beta pruning. Alpha-beta 
+pruning saves time because you don't have to evaluate all the nodes.
+
+
