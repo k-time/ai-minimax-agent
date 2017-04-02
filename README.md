@@ -1,6 +1,8 @@
 # ai-minimax-agent
 Python agent that plays the board game [Reversi/Othello](https://en.wikipedia.org/wiki/Reversi) using a [minimax strategy](https://en.wikipedia.org/wiki/Minimax) with [alpha-beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning).
 
+Uses Python 2.7.
+
 ## Files
 File|Description
 :-:|---
